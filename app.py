@@ -1,18 +1,10 @@
-from flask import Flask
-import os
-
-# Create Flask application instance
+from flask import Flask, send_from_directory
 app = Flask(__name__)
 
 @app.route('/')
-def home():
-    return 'Voice Live API - Flask entrypoint for Azure Web App'
+def root():
+    return send_from_directory('.', 'index.html')
 
-@app.route('/health')
-def health():
-    return {'status': 'healthy', 'message': 'Flask app is running'}
-
-if __name__ == '__main__':
-    # Get port from environment variable or default to 8000
-    port = int(os.environ.get('PORT', 8000))
-    app.run(host='0.0.0.0', port=port, debug=False)
+@app.route('/<path:filename>')
+def static_files(filename):
+    return send_from_directory('.', filename)
