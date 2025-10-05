@@ -3,7 +3,6 @@
 Simple HTTP server for Azure Voice Live web frontend
 Run this to serve the HTML/JS files locally
 """
-
 import http.server
 import socketserver
 import webbrowser
@@ -16,7 +15,7 @@ def main():
     script_dir = Path(__file__).parent
     os.chdir(script_dir)
     
-    PORT = 8000
+    PORT = int(os.environ.get('PORT', 8000))
     
     class CustomHandler(http.server.SimpleHTTPRequestHandler):
         def end_headers(self):
